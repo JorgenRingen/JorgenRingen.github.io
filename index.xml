@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>JRTech</title>
+    <title>JR</title>
     <link>https://jorgenringen.github.io/</link>
-    <description>Recent content on JRTech</description>
+    <description>Recent content on JR</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 12 Dec 2017 08:52:40 +0100</lastBuildDate>
@@ -17,7 +17,7 @@
       <pubDate>Tue, 12 Dec 2017 08:52:40 +0100</pubDate>
       
       <guid>https://jorgenringen.github.io/posts/my-first-post/</guid>
-      <description></description>
+      <description> This is a test!  x y z  </description>
     </item>
     
   </channel>
