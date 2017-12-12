@@ -36,8 +36,7 @@
       
       <guid>https://jorgenringen.github.io/blog/my-first-post/</guid>
       <description>This is a test!  x y z  Hugo Shortcodes
-class Test { public static void main(String [] args) { System.out.println(&amp;#34;Hello github pages!&amp;#34;); } } class Test { public static void main(String [] args) { System.out.println(&amp;#34;Hello github pages!&amp;#34;); } } 
-{{ partial &amp;ldquo;disqus&amp;rdquo; . }} {{ partial &amp;ldquo;disqus-counter&amp;rdquo; . }}</description>
+class Test { public static void main(String [] args) { System.out.println(&amp;#34;Hello github pages!&amp;#34;); } } class Test { public static void main(String [] args) { System.out.println(&amp;#34;Hello github pages!&amp;#34;); } }</description>
     </item>
     
   </channel>
