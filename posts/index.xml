@@ -17,7 +17,8 @@
       <pubDate>Tue, 12 Dec 2017 08:52:40 +0100</pubDate>
       
       <guid>https://jorgenringen.github.io/posts/my-first-post/</guid>
-      <description> This is a test!  x y z  </description>
+      <description>This is a test!  x y z  Hugo Shortcodes
+class Test { public static void main(String [] args) { System.out.println(&amp;#34;Hello github pages!&amp;#34;); } } class Test { public static void main(String [] args) { System.out.println(&amp;#34;Hello github pages!&amp;#34;); } }</description>
     </item>
     
   </channel>
