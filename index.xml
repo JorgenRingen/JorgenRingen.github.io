@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>JR</title>
+    <title>JRCode</title>
     <link>https://jorgenringen.github.io/</link>
-    <description>Recent content on JR</description>
+    <description>Recent content on JRCode</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 12 Dec 2017 19:04:34 +0100</lastBuildDate>
@@ -17,7 +17,7 @@
       <pubDate>Tue, 12 Dec 2017 19:04:34 +0100</pubDate>
       
       <guid>https://jorgenringen.github.io/about/</guid>
-      <description>Scribblings about topics such Java, Java EE, Spring Platform, distributed services, etc.</description>
+      <description>Scribblings about topics such Java, Java EE, Spring, microservices, etc.</description>
     </item>
     
     <item>
