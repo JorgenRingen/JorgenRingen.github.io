@@ -21,22 +21,15 @@
     </item>
     
     <item>
-      <title>Your New Post</title>
-      <link>https://jorgenringen.github.io/blog/your-new-post/</link>
-      <pubDate>Tue, 12 Dec 2017 19:00:59 +0100</pubDate>
+      <title>JavaEE: Using JSR 310 in your DTO&#39;s with JAX-RS</title>
+      <link>https://jorgenringen.github.io/blog/javaee-using-jsr-310-in-your-dtos-with-jax-rs/</link>
+      <pubDate>Thu, 21 May 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://jorgenringen.github.io/blog/your-new-post/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>My First Post</title>
-      <link>https://jorgenringen.github.io/blog/my-first-post/</link>
-      <pubDate>Tue, 12 Dec 2017 08:52:40 +0100</pubDate>
-      
-      <guid>https://jorgenringen.github.io/blog/my-first-post/</guid>
-      <description>This is a test!  x y z  Hugo Shortcodes
-class Test { public static void main(String [] args) { System.out.println(&amp;#34;Hello github pages!&amp;#34;); } } class Test { public static void main(String [] args) { System.out.println(&amp;#34;Hello github pages!&amp;#34;); } }</description>
+      <guid>https://jorgenringen.github.io/blog/javaee-using-jsr-310-in-your-dtos-with-jax-rs/</guid>
+      <description>With Java 8 came JSR310, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
+JavaEE dependency:
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;javaee-api&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;7.0&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; Create a simple Person-class with a field, birthDate, of type java.time.LocalDate from JSR310:
+public class Person { ... private LocalDate birthDate; ... } Lets say we wan&amp;rsquo;t to use the Person entity directly as an input parameter for a JAX-RS endpoint like this:</description>
     </item>
     
   </channel>
