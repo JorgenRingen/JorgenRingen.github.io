@@ -9,16 +9,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer">
 <meta name="author" content="Jørgen Ringen">
-<meta name="description" content="With Java 8 came JSR310, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
+<meta name="description" content="With Java 8 came the JSR310 Date and Time API, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
 JavaEE dependency:
 &lt;dependency&gt; &lt;groupId&gt;javax&lt;/groupId&gt; &lt;artifactId&gt;javaee-api&lt;/artifactId&gt; &lt;version&gt;7.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; Create a simple Person-class with a field, birthDate, of type java.time.LocalDate from JSR310:
-public class Person { ... private LocalDate birthDate; ... } Lets say we wan&rsquo;t to use the Person entity directly as an input parameter for a JAX-RS endpoint like this:">
+public class Person { ... private LocalDate birthDate; .">
 
 <meta property="og:title" content="JavaEE: Using JSR310 time-types in JAX-RS" />
-<meta property="og:description" content="With Java 8 came JSR310, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
+<meta property="og:description" content="With Java 8 came the JSR310 Date and Time API, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
 JavaEE dependency:
 &lt;dependency&gt; &lt;groupId&gt;javax&lt;/groupId&gt; &lt;artifactId&gt;javaee-api&lt;/artifactId&gt; &lt;version&gt;7.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; Create a simple Person-class with a field, birthDate, of type java.time.LocalDate from JSR310:
-public class Person { ... private LocalDate birthDate; ... } Lets say we wan&rsquo;t to use the Person entity directly as an input parameter for a JAX-RS endpoint like this:" />
+public class Person { ... private LocalDate birthDate; ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://jorgenringen.github.io/2015/05/javaee_jsr310_types_with_jaxrs/" />
 
@@ -63,9 +63,9 @@ public class Person { ... private LocalDate birthDate; ... } Lets say we wan&rsq
 
 
     
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2020%3a46%3a01.303803%20%2b0100%20CET%20m%3d%2b0.063455581">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2020%3a46%3a01.303803%20%2b0100%20CET%20m%3d%2b0.063455581">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2020%3a46%3a01.303803%20%2b0100%20CET%20m%3d%2b0.063455581">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2020%3a57%3a53.509795%20%2b0100%20CET%20m%3d%2b0.050925981">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2020%3a57%3a53.509795%20%2b0100%20CET%20m%3d%2b0.050925981">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2020%3a57%3a53.509795%20%2b0100%20CET%20m%3d%2b0.050925981">
     
 
 
@@ -186,8 +186,8 @@ public class Person { ... private LocalDate birthDate; ... } Lets say we wan&rsq
                 </div>
             </div>
             <div class="markdown">
-                <p>With Java 8 came JSR310, a new and improved date and time API for Java.
-This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.</p>
+                <p>With Java 8 came the <a href="https://jcp.org/en/jsr/detail?id=310">JSR310 Date and Time API</a>, a new and improved date and time API for Java.
+This post will show you how you can use types from JSR310 directly in <a href="https://github.com/jax-rs">JAX-RS</a> s by only leveraging the Java EE api.</p>
 
 <p>JavaEE dependency:</p>
 <div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
@@ -241,7 +241,7 @@ Unfortunately there is no elegant uniform way to overcome this by only using t
 private LocalDate birthDate;
 </code></pre>
 
-<p>Instead of annotating the field we can declare the adapter in a package-info.java file together with our DTO&rsquo;s. This avoids cluttering of the java-code.</p>
+<p>Instead of annotating the field we can declare the adapter inside a package-info.java file together with our DTO&rsquo;s. This avoids cluttering of the java-code.</p>
 
 <pre><code>@XmlJavaTypeAdapters({
     @XmlJavaTypeAdapter(type = LocalDate.class,

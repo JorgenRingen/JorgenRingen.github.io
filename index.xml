@@ -49,10 +49,10 @@ Feel free to fork and submit your own &amp;ldquo;perfectionized&amp;rdquo; solut
       <pubDate>Thu, 21 May 2015 00:00:00 +0000</pubDate>
       
       <guid>https://jorgenringen.github.io/2015/05/javaee_jsr310_types_with_jaxrs/</guid>
-      <description>With Java 8 came JSR310, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
+      <description>With Java 8 came the JSR310 Date and Time API, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
 JavaEE dependency:
 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;javaee-api&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;7.0&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; Create a simple Person-class with a field, birthDate, of type java.time.LocalDate from JSR310:
-public class Person { ... private LocalDate birthDate; ... } Lets say we wan&amp;rsquo;t to use the Person entity directly as an input parameter for a JAX-RS endpoint like this:</description>
+public class Person { ... private LocalDate birthDate; .</description>
     </item>
     
   </channel>

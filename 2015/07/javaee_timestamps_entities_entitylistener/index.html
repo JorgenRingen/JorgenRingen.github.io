@@ -63,9 +63,9 @@ public interface EntityWithTimeStamp { void setTimeStamp(TimeStamp timeStamp); T
 
 
     
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2020%3a46%3a01.303815%20%2b0100%20CET%20m%3d%2b0.063469048">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2020%3a46%3a01.303815%20%2b0100%20CET%20m%3d%2b0.063469048">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2020%3a46%3a01.303815%20%2b0100%20CET%20m%3d%2b0.063469048">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2020%3a57%3a53.50709%20%2b0100%20CET%20m%3d%2b0.048218326">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2020%3a57%3a53.50709%20%2b0100%20CET%20m%3d%2b0.048218326">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2020%3a57%3a53.50709%20%2b0100%20CET%20m%3d%2b0.048218326">
     
 
 
@@ -186,7 +186,7 @@ public interface EntityWithTimeStamp { void setTimeStamp(TimeStamp timeStamp); T
                 </div>
             </div>
             <div class="markdown">
-                <p>This post shows how you can add timestamps to your entities in a non-intrusive unified way with plain JPA.</p>
+                <p>This post shows how you can add timestamps to your entities in a non-intrusive unified way with plain <a href="https://docs.oracle.com/javaee/6/tutorial/doc/bnbpz.html">JPA</a>.</p>
 
 <hr />
 
@@ -258,7 +258,7 @@ public interface EntityWithTimeStamp { void setTimeStamp(TimeStamp timeStamp); T
 
 <hr />
 
-<p>Our EntityListener class is just a simple java class with annotated methods declaring which events from the JPA runtime it should perform actions upon:</p>
+<p>Our <a href="https://docs.jboss.org/hibernate/entitymanager/3.6/reference/en/html/listeners.html">EntityListener</a> class is just a simple java class with annotated methods declaring which events from the JPA runtime it should perform actions upon:</p>
 
 <pre><code>public class TimeStampListener {
 
@@ -288,30 +288,33 @@ public interface EntityWithTimeStamp { void setTimeStamp(TimeStamp timeStamp); T
 <hr />
 
 <p>Simple Test:</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Test</span>
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testTimeStamp</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
-    <span class="c1">// create
-</span><span class="c1"></span>    <span class="n">tx</span><span class="o">.</span><span class="na">begin</span><span class="o">();</span>
-    <span class="n">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">();</span>
-    <span class="n">person</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;Name1&#34;</span><span class="o">);</span>
-    <span class="n">person</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="na">merge</span><span class="o">(</span><span class="n">person</span><span class="o">);</span>
-    <span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">TimestampListenerTest</span> <span class="o">{</span>
 
-    <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getCreated</span><span class="o">(),</span> <span class="n">not</span><span class="o">(</span><span class="n">nullValue</span><span class="o">()));</span>
-    <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getUpdated</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="n">nullValue</span><span class="o">()));</span>
-
-    <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">5</span><span class="o">);</span>
-
-    <span class="c1">// update
-</span><span class="c1"></span>    <span class="n">tx</span><span class="o">.</span><span class="na">begin</span><span class="o">();</span>
-    <span class="n">person</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">person</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
-    <span class="n">person</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;Name2&#34;</span><span class="o">);</span>
-    <span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
-
-    <span class="c1">// verify timestamp
-</span><span class="c1"></span>    <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getCreated</span><span class="o">(),</span> <span class="n">not</span><span class="o">(</span><span class="n">nullValue</span><span class="o">()));</span>
-    <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getUpdated</span><span class="o">(),</span> <span class="n">not</span><span class="o">(</span><span class="n">nullValue</span><span class="o">()));</span>
-    <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getUpdated</span><span class="o">(),</span> <span class="n">after</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getCreated</span><span class="o">()));</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testTimeStamp</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="c1">// create
+</span><span class="c1"></span>        <span class="n">tx</span><span class="o">.</span><span class="na">begin</span><span class="o">();</span>
+        <span class="n">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">();</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;Name1&#34;</span><span class="o">);</span>
+        <span class="n">person</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="na">merge</span><span class="o">(</span><span class="n">person</span><span class="o">);</span>
+        <span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+    
+        <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getCreated</span><span class="o">(),</span> <span class="n">not</span><span class="o">(</span><span class="n">nullValue</span><span class="o">()));</span>
+        <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getUpdated</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="n">nullValue</span><span class="o">()));</span>
+    
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">5</span><span class="o">);</span>
+    
+        <span class="c1">// update
+</span><span class="c1"></span>        <span class="n">tx</span><span class="o">.</span><span class="na">begin</span><span class="o">();</span>
+        <span class="n">person</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">person</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;Name2&#34;</span><span class="o">);</span>
+        <span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+    
+        <span class="c1">// verify timestamp
+</span><span class="c1"></span>        <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getCreated</span><span class="o">(),</span> <span class="n">not</span><span class="o">(</span><span class="n">nullValue</span><span class="o">()));</span>
+        <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getUpdated</span><span class="o">(),</span> <span class="n">not</span><span class="o">(</span><span class="n">nullValue</span><span class="o">()));</span>
+        <span class="n">assertThat</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getUpdated</span><span class="o">(),</span> <span class="n">after</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getTimeStamp</span><span class="o">().</span><span class="na">getCreated</span><span class="o">()));</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
                 <br>
 		<p class="back-to-posts"><a href="https://jorgenringen.github.io/blog/">Back to posts</a></p>
