@@ -21,6 +21,17 @@
     </item>
     
     <item>
+      <title>Java8: Stream and Lambda code kata</title>
+      <link>https://jorgenringen.github.io/blog/java8-stream-and-lambda-code-kata/</link>
+      <pubDate>Thu, 04 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://jorgenringen.github.io/blog/java8-stream-and-lambda-code-kata/</guid>
+      <description>I just added a code kata for learning the Stream and Lambda API&amp;rsquo;s in Java 8.
+The purpose of a kata is to repeat a simple exercise over and over again, making small improvements for each iteration, until you basically can do the exercise blind folded. I find this to be one of the most effective ways to improve basic coding skills and to learn new things.
+Feel free to fork and submit your own &amp;ldquo;perfectionized&amp;rdquo; solution.</description>
+    </item>
+    
+    <item>
       <title>JavaEE: Using JSR 310 in your DTO&#39;s with JAX-RS</title>
       <link>https://jorgenringen.github.io/blog/javaee-using-jsr-310-in-your-dtos-with-jax-rs/</link>
       <pubDate>Thu, 21 May 2015 00:00:00 +0000</pubDate>
