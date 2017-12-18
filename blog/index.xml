@@ -6,10 +6,21 @@
     <description>Recent content in Blog on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2015 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 Apr 2016 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://jorgenringen.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JavaEE: Externalising configuration with ZooKeeper</title>
+      <link>https://jorgenringen.github.io/2016/04/javaee_configuration_zookeeper/</link>
+      <pubDate>Fri, 01 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jorgenringen.github.io/2016/04/javaee_configuration_zookeeper/</guid>
+      <description>An important principle in continuous delivery is to build application binaries only once and let the exact same binary flow through each step of the build pipeline in order to verify that the binary is ready for production.
+A typical build pipeline might look something like this: 1. Commit stage (build, unit test, analysis) 2. Automated acceptance tests 3. Capacity testing 4. User acceptance testing 5. Production
+Many of these steps will often require different application configuration.</description>
+    </item>
     
     <item>
       <title>JavaEE: Timestamps on entities with entitylistener</title>

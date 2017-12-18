@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Jørgen Ringen">
+<meta name="description" content="An important principle in continuous delivery is to build application binaries only once and let the exact same binary flow through each step of the build pipeline in order to verify that the binary is ready for production.
+A typical build pipeline might look something like this: 1. Commit stage (build, unit test, analysis) 2. Automated acceptance tests 3. Capacity testing 4. User acceptance testing 5. Production
+Many of these steps will often require different application configuration.">
+
+<meta property="og:title" content="JavaEE: Externalising configuration with ZooKeeper" />
+<meta property="og:description" content="An important principle in continuous delivery is to build application binaries only once and let the exact same binary flow through each step of the build pipeline in order to verify that the binary is ready for production.
+A typical build pipeline might look something like this: 1. Commit stage (build, unit test, analysis) 2. Automated acceptance tests 3. Capacity testing 4. User acceptance testing 5. Production
+Many of these steps will often require different application configuration." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jorgenringen.github.io/2016/04/javaee_configuration_zookeeper/" />
+
+
+
+<meta property="article:published_time" content="2016-04-01T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2016-04-01T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     JavaEE: Externalising configuration with ZooKeeper 
+
+</title>
+<link rel="canonical" href="https://jorgenringen.github.io/2016/04/javaee_configuration_zookeeper/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2021%3a23%3a42.326288%20%2b0100%20CET%20m%3d%2b0.055312060">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2021%3a23%3a42.326288%20%2b0100%20CET%20m%3d%2b0.055312060">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2021%3a23%3a42.326288%20%2b0100%20CET%20m%3d%2b0.055312060">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://jorgenringen.github.io/img/leaf.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="https://jorgenringen.github.io/"><img class="avatar" src="https://jorgenringen.github.io/img/profile.png" srcset="https://jorgenringen.github.io/img/profile.png 1x"></a>
+            
+            <a href="https://jorgenringen.github.io/"><div class="name">Jørgen Ringen</div></a>
+            
+              <h3 class="self-intro">Nothin but code 👨‍💻</h3>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://jorgenringen.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://jorgenringen.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://github.com/JorgenRingen"><span>Code</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/JorgenRingen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/JorgenRingen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+
+        
+            <a href="//linkedin.com/in/jorgenringen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            
+        
+
+        
+
+        
+            <a href="mailto:jorgen.ringen@gmail.com"><img class="icon" src="https://jorgenringen.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+            <a href="https://jorgenringen.github.io/index.xml"><img class="icon" src="https://jorgenringen.github.io/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    JavaEE: Externalising configuration with ZooKeeper
+
+</div>
+
+                    <div class="initials"><a href="https://jorgenringen.github.io/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Fri Apr 1 2016 00:00:00 UTC'>Apr 1, 2016</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>3 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>An important principle in <a href="https://continuousdelivery.com/">continuous delivery</a> is to
+build application binaries only <em>once</em> and let the exact same binary flow through each step of the <a href="https://devops.com/continuous-delivery-pipeline/">build pipeline</a> in order to verify that the binary is ready for production.</p>
+
+<p>A typical build pipeline might look something like this:
+1. Commit stage (build, unit test, analysis)
+2. Automated acceptance tests
+3. Capacity testing
+4. User acceptance testing
+5. Production</p>
+
+<p>Many of these steps will often require different application configuration. We might for instance want to stub out some backend services, use different username/password for each environment, etc.</p>
+
+<p>Unfortunately there’s a convention in the Java EE spec to
+package the configuration inside the war or ear file together with the application.
+This means that we have to configure the application build time.
+When we do this we have to create a different application binary for different deployment environments.
+This is a serious risk and an anti pattern in continuous delivery.</p>
+
+<hr />
+
+<h3 id="externalising-configuration-with-apache-zookeeper">Externalising configuration with Apache ZooKeeper</h3>
+
+<p><a href="https://zookeeper.apache.org/">Apache ZooKeeper</a> is, among many things, a centralised service for maintaining configuration information.
+ZooKeeper maintains a tree-structure with nodes and child-nodes.
+Each node in ZooKeeper can have data as well as children associated with it.
+This is a great data structure for storing configuration.
+ZooKeeper also provides a mechanism called watches, where clients can listen for changes.
+This means that we can update configuration at runtime.</p>
+
+<p>There’s an official <a href="https://hub.docker.com/_/zookeeper/">Docker image for Apache Zookeeper</a> that will help you get Zookeeper up and running.</p>
+
+<p>We’ll connect to ZooKeeper using the CLI and add some nodes to store our configuration:</p>
+
+<pre><code>create /myapp root
+create /myapp/config config
+create /myapp/config/endpoints endpoints
+create /myapp/config/endpoints/twitter my-twitter-test.com
+</code></pre>
+
+<hr />
+
+<h3 id="using-curator-to-connect-to-zookeeper-from-java-ee">Using Curator to connect to ZooKeeper from Java EE</h3>
+
+<p>ZooKeeper has a very low-level API and <a href="https://curator.apache.org/">Apache Curator</a> is a framework client library for ZooKeeper
+that has a nice API and is quite easy to work with.</p>
+
+<p>The first thing we need to do is to add the curator client dependencies in our pom:</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.curator<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>curator-framework<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.9.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.curator<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>curator-client<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.9.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></div>
+<p>Too instantiate curator we will use a @Startup @Singleton bean. The url to ZooKeeper should be provided as an application parameter (avoid build time configuration, remember).</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.curator.RetryPolicy</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.framework.CuratorFramework</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.framework.CuratorFrameworkFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.framework.api.CuratorWatcher</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.retry.ExponentialBackoffRetry</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.zookeeper.WatchedEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.zookeeper.Watcher</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.PostConstruct</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.annotation.PreDestroy</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ejb.Singleton</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.ejb.Startup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
+
+<span class="nd">@Singleton</span>
+<span class="nd">@Startup</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ZooKeeperRegistry</span> <span class="o">{</span>
+
+	<span class="kd">private</span> <span class="n">String</span> <span class="n">zookeeperHost</span> <span class="o">=</span> <span class="s">&#34;127.0.0.1:2181&#34;</span><span class="o">;</span> <span class="c1">// use jvm argument
+</span><span class="c1"></span>	<span class="kd">private</span> <span class="n">CuratorFramework</span> <span class="n">client</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+
+	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getProperty</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">properties</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="nf">getProperties</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">properties</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="nd">@PostConstruct</span>
+	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">postConstruct</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+		<span class="c1">// establish connection to ZooKeeper
+</span><span class="c1"></span>		<span class="n">RetryPolicy</span> <span class="n">retryPolicy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ExponentialBackoffRetry</span><span class="o">(</span><span class="n">10000</span><span class="o">,</span> <span class="n">3</span><span class="o">);</span>
+		<span class="n">client</span> <span class="o">=</span> <span class="n">CuratorFrameworkFactory</span><span class="o">.</span><span class="na">newClient</span><span class="o">(</span><span class="n">zookeeperHost</span><span class="o">,</span> <span class="n">retryPolicy</span><span class="o">);</span>
+		<span class="n">client</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+
+		<span class="c1">// get data for node, add a watcher to retrieve updates
+</span><span class="c1"></span>		<span class="kt">byte</span><span class="o">[]</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">usingWatcher</span><span class="o">(</span><span class="k">new</span> <span class="n">MyWatcher</span><span class="o">()).</span><span class="na">forPath</span><span class="o">(</span><span class="s">&#34;/myapp/config/endpoints/twitter&#34;</span><span class="o">);</span>
+		<span class="n">properties</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;twitter-endpoint&#34;</span><span class="o">,</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">endpoint</span><span class="o">));</span>
+	<span class="o">}</span>
+
+	<span class="nd">@PreDestroy</span>
+	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">preDestroy</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">client</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	<span class="o">}</span>
+
+	<span class="kd">private</span> <span class="kd">class</span> <span class="nc">MyWatcher</span> <span class="kd">implements</span> <span class="n">CuratorWatcher</span> <span class="o">{</span>
+
+		<span class="nd">@Override</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">process</span><span class="o">(</span><span class="n">WatchedEvent</span> <span class="n">event</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getType</span><span class="o">()</span> <span class="o">==</span> <span class="n">Watcher</span><span class="o">.</span><span class="na">Event</span><span class="o">.</span><span class="na">EventType</span><span class="o">.</span><span class="na">NodeDataChanged</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// get changed data, re-register the watcher to get further notifications
+</span><span class="c1"></span>				<span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">usingWatcher</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">forPath</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getPath</span><span class="o">());</span>
+				<span class="n">properties</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;twitter&#34;</span><span class="o">,</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">));</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+<p>This is just a simple example on how you can store your configuration data outside the war or ear.</p>
+
+<p>There are many management and visualisation tools available for ZooKeeper and there are plugins for both Intellij and Eclipse. ZooKeeper also comes bundled with a gui tool called ZooInspector.</p>
+
+<p>There are also many alternatives to ZooKeeper, like <a href="https://spring.io/guides/gs/centralized-configuration/">Spring Config Server</a>, <a href="https://www.consul.io/">Consul</a> and <a href="https://github.com/coreos/etcd">etcd</a>.</p>
+
+<p>You can also use jvm parameters or store configuration in a database, but the most important point is to remove the build-time dependency.</p>
+
+                <br>
+		<p class="back-to-posts"><a href="https://jorgenringen.github.io/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jorgenringen" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111173729-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+
