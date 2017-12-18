@@ -21,6 +21,18 @@
     </item>
     
     <item>
+      <title>JavaEE: Timestamps on entities with entitylistener</title>
+      <link>https://jorgenringen.github.io/blog/javaee-timestamps-on-entities-with-entitylistener/</link>
+      <pubDate>Wed, 01 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://jorgenringen.github.io/blog/javaee-timestamps-on-entities-with-entitylistener/</guid>
+      <description>This post shows how you can add timestamps to your entities in a non-intrusive unified way with plain JPA.
+We start off with an embeddable JPA entity, TimeStamp:
+import javax.persistence.Column; import javax.persistence.Embeddable; import java.util.Date; @Embeddable public class TimeStamp { @Column(name = &amp;#34;date_created&amp;#34;) @Temporal(TemporalType.TIMESTAMP) private Date created; @Column(name = &amp;#34;date_updated&amp;#34;) @Temporal(TemporalType.TIMESTAMP) private Date updated; // getters, setters, etc } We also need a simple interface that our entities should implement:
+public interface EntityWithTimeStamp { void setTimeStamp(TimeStamp timeStamp); TimeStamp getTimeStamp(); } Lets add an entity which implements our interface:</description>
+    </item>
+    
+    <item>
       <title>Java8: Stream and Lambda code kata</title>
       <link>https://jorgenringen.github.io/blog/java8-stream-and-lambda-code-kata/</link>
       <pubDate>Thu, 04 Jun 2015 00:00:00 +0000</pubDate>
