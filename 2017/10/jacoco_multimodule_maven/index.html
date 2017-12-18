@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Jørgen Ringen">
+<meta name="description" content="I&rsquo;ve created a simple dummy-project that demonstrates how to configure the jacoco code coverage library in a multi-module maven project with integration-tests in order to get a complete coverage-report.
+Problem One of the problems with jacoco and maven is that coverage is only reported for code in the module in which the tests are located and not for the entire project as a whole. This means that the coverage-percent will be under-reported in many cases.">
+
+<meta property="og:title" content="Jacoco coverage plugin in multimodule maven projects" />
+<meta property="og:description" content="I&rsquo;ve created a simple dummy-project that demonstrates how to configure the jacoco code coverage library in a multi-module maven project with integration-tests in order to get a complete coverage-report.
+Problem One of the problems with jacoco and maven is that coverage is only reported for code in the module in which the tests are located and not for the entire project as a whole. This means that the coverage-percent will be under-reported in many cases." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jorgenringen.github.io/2017/10/jacoco_multimodule_maven/" />
+
+
+
+<meta property="article:published_time" content="2017-10-03T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-03T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Jacoco coverage plugin in multimodule maven projects 
+
+</title>
+<link rel="canonical" href="https://jorgenringen.github.io/2017/10/jacoco_multimodule_maven/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2021%3a32%3a50.69925%20%2b0100%20CET%20m%3d%2b0.063104087">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2021%3a32%3a50.69925%20%2b0100%20CET%20m%3d%2b0.063104087">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2021%3a32%3a50.69925%20%2b0100%20CET%20m%3d%2b0.063104087">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://jorgenringen.github.io/img/leaf.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="https://jorgenringen.github.io/"><img class="avatar" src="https://jorgenringen.github.io/img/profile.png" srcset="https://jorgenringen.github.io/img/profile.png 1x"></a>
+            
+            <a href="https://jorgenringen.github.io/"><div class="name">Jørgen Ringen</div></a>
+            
+              <h3 class="self-intro">Nothin but code 👨‍💻</h3>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://jorgenringen.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://jorgenringen.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://github.com/JorgenRingen"><span>Code</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/JorgenRingen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/JorgenRingen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+
+        
+            <a href="//linkedin.com/in/jorgenringen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            
+        
+
+        
+
+        
+            <a href="mailto:jorgen.ringen@gmail.com"><img class="icon" src="https://jorgenringen.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+            <a href="https://jorgenringen.github.io/index.xml"><img class="icon" src="https://jorgenringen.github.io/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Jacoco coverage plugin in multimodule maven projects
+
+</div>
+
+                    <div class="initials"><a href="https://jorgenringen.github.io/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Tue Oct 3 2017 00:00:00 UTC'>Oct 3, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>I&rsquo;ve created a <a href="https://github.com/JorgenRingen/jacoco-multimodule-maven">simple dummy-project</a> that demonstrates how to configure the jacoco code coverage
+library in a multi-module maven project with integration-tests in order to get
+a complete coverage-report.</p>
+
+<h3 id="problem">Problem</h3>
+
+<p>One of the problems with jacoco and maven is that coverage is only
+reported for code in the module in which the tests are located and not for
+the entire project as a whole. This means that the coverage-percent will
+be under-reported in many cases.</p>
+
+<h3 id="solution">Solution</h3>
+
+<p>In this example class A in module-a calls class B in module-B which calls class C
+in module-c. All the tests are located in module-a. With standard configuration class A
+is the only class that will get coverage in the jacoco report.</p>
+
+<p>By using report-appending in jacoco we can fix this and get coverage for all the classes
+in the whole project and not just for the classes in the module where the tests resides.</p>
+
+<h5 id="root-pom-xml">Root pom.xml</h5>
+
+<p>Properties:</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;jacoco.version&gt;</span>0.7.9<span class="nt">&lt;/jacoco.version&gt;</span>
+    <span class="nt">&lt;sonar.jacoco.reportPaths&gt;</span>${project.basedir}/../target/jacoco.exec<span class="nt">&lt;/sonar.jacoco.reportPaths&gt;</span>
+    <span class="nt">&lt;sonar.jacoco.itReportPath&gt;</span>${project.basedir}/../target/jacoco-it.exec<span class="nt">&lt;/sonar.jacoco.itReportPath&gt;</span>
+    <span class="nt">&lt;sonar.language&gt;</span>java<span class="nt">&lt;/sonar.language&gt;</span>
+    <span class="nt">&lt;sonar.java.coveragePlugin&gt;</span>jacoco<span class="nt">&lt;/sonar.java.coveragePlugin&gt;</span>
+<span class="nt">&lt;/properties&gt;</span></code></pre></div>
+<p>Configuration of the jacoco maven plugin:</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.jacoco<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>jacoco-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>${jacoco.version}<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="c">&lt;!-- Unit-tests --&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;id&gt;</span>agent-for-ut<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>prepare-agent<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;append&gt;</span>true<span class="nt">&lt;/append&gt;</span>
+                <span class="nt">&lt;destFile&gt;</span>${sonar.jacoco.reportPaths}<span class="nt">&lt;/destFile&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+        <span class="c">&lt;!-- Integration-tests executed with failsafe-plugin --&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;id&gt;</span>agent-for-it<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;phase&gt;</span>package<span class="nt">&lt;/phase&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>prepare-agent-integration<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;append&gt;</span>true<span class="nt">&lt;/append&gt;</span>
+                <span class="nt">&lt;destFile&gt;</span>${sonar.jacoco.itReportPath}<span class="nt">&lt;/destFile&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span></code></pre></div>
+<h5 id="nested-submodules">Nested submodules</h5>
+
+<p>No further configuration is required if you only have one level of submodules.
+In our example we have two levels of submodules for module-c.</p>
+
+<pre><code>root
+ - module-a
+ - module-b
+ - module-c
+     - module-c1
+</code></pre>
+
+<p>To get nested submodules to append to the report we have to override the jacoco properties
+we specified in the root pom:</p>
+
+<pre><code>&lt;sonar.jacoco.reportPaths&gt;${project.basedir}/../../target/jacoco.exec&lt;/sonar.jacoco.reportPaths&gt;
+&lt;sonar.jacoco.itReportPath&gt;${project.basedir}/../../target/jacoco-it.exec&lt;/sonar.jacoco.itReportPath&gt;
+</code></pre>
+
+<p>Notice that we need to traverse up to the folder of the root module in the file path.</p>
+
+<h3 id="testing">Testing</h3>
+
+<p>Run sonar in a docker container
+<code>docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube</code></p>
+
+<p>Build the project with integration-tests and and publish to sonar
+<code>mvn clean install failsafe:integration-test sonar:sonar</code></p>
+
+<p>You should now have jacoco.exec and jacoco-it.exec in the target-folder of the root-module.</p>
+
+<p>Open localhost:9000 and verify that the coverage is 100%.</p>
+
+                <br>
+		<p class="back-to-posts"><a href="https://jorgenringen.github.io/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jorgenringen" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111173729-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

@@ -21,6 +21,16 @@
     </item>
     
     <item>
+      <title>Jacoco coverage plugin in multimodule maven projects</title>
+      <link>https://jorgenringen.github.io/2017/10/jacoco_multimodule_maven/</link>
+      <pubDate>Tue, 03 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://jorgenringen.github.io/2017/10/jacoco_multimodule_maven/</guid>
+      <description>I&amp;rsquo;ve created a simple dummy-project that demonstrates how to configure the jacoco code coverage library in a multi-module maven project with integration-tests in order to get a complete coverage-report.
+Problem One of the problems with jacoco and maven is that coverage is only reported for code in the module in which the tests are located and not for the entire project as a whole. This means that the coverage-percent will be under-reported in many cases.</description>
+    </item>
+    
+    <item>
       <title>JavaEE: Externalising configuration with ZooKeeper</title>
       <link>https://jorgenringen.github.io/2015/10/javaee_configuration_zookeeper/</link>
       <pubDate>Thu, 01 Oct 2015 00:00:00 +0000</pubDate>
