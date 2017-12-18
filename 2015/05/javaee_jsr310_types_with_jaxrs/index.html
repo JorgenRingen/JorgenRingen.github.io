@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Jorgen Ringen">
+<meta name="description" content="With Java 8 came JSR310, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
+JavaEE dependency:
+&lt;dependency&gt; &lt;groupId&gt;javax&lt;/groupId&gt; &lt;artifactId&gt;javaee-api&lt;/artifactId&gt; &lt;version&gt;7.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; Create a simple Person-class with a field, birthDate, of type java.time.LocalDate from JSR310:
+public class Person { ... private LocalDate birthDate; ... } Lets say we wan&rsquo;t to use the Person entity directly as an input parameter for a JAX-RS endpoint like this:">
+
+<meta property="og:title" content="JavaEE: Using JSR310 time-types in JAX-RS" />
+<meta property="og:description" content="With Java 8 came JSR310, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
+JavaEE dependency:
+&lt;dependency&gt; &lt;groupId&gt;javax&lt;/groupId&gt; &lt;artifactId&gt;javaee-api&lt;/artifactId&gt; &lt;version&gt;7.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; Create a simple Person-class with a field, birthDate, of type java.time.LocalDate from JSR310:
+public class Person { ... private LocalDate birthDate; ... } Lets say we wan&rsquo;t to use the Person entity directly as an input parameter for a JAX-RS endpoint like this:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jorgenringen.github.io/2015/05/javaee_jsr310_types_with_jaxrs/" />
+
+
+
+<meta property="article:published_time" content="2015-05-21T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2015-05-21T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     JavaEE: Using JSR310 time-types in JAX-RS 
+
+</title>
+<link rel="canonical" href="https://jorgenringen.github.io/2015/05/javaee_jsr310_types_with_jaxrs/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2015%3a06%3a25.250277886%20%2b0100%20CET%20m%3d%2b0.044724897">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2015%3a06%3a25.250277886%20%2b0100%20CET%20m%3d%2b0.044724897">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2015%3a06%3a25.250277886%20%2b0100%20CET%20m%3d%2b0.044724897">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://jorgenringen.github.io/img/leaf.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="https://jorgenringen.github.io/"><img class="avatar" src="https://jorgenringen.github.io/img/profile.png" srcset="https://jorgenringen.github.io/img/profile.png 1x"></a>
+            
+            <a href="https://jorgenringen.github.io/"><div class="name">Jorgen Ringen</div></a>
+            
+              <h3 class="self-intro">Nothin but code 👨‍💻</h3>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://jorgenringen.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://jorgenringen.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://github.com/JorgenRingen"><span>Code</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/JorgenRingen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/JorgenRingen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+
+        
+            <a href="//linkedin.com/in/jorgenringen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            
+        
+
+        
+
+        
+            <a href="mailto:jorgen.ringen@gmail.com"><img class="icon" src="https://jorgenringen.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+            <a href="https://jorgenringen.github.io/index.xml"><img class="icon" src="https://jorgenringen.github.io/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    JavaEE: Using JSR310 time-types in JAX-RS
+
+</div>
+
+                    <div class="initials"><a href="https://jorgenringen.github.io/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu May 21 2015 00:00:00 UTC'>May 21, 2015</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>With Java 8 came JSR310, a new and improved date and time API for Java.
+This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.</p>
+
+<p>JavaEE dependency:</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>javax<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>javaee-api<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>7.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></div>
+<p>Create a simple Person-class with a field, birthDate, of type java.time.LocalDate from JSR310:</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+
+    <span class="o">...</span>
+    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">birthDate</span><span class="o">;</span>
+    <span class="o">...</span>
+<span class="o">}</span></code></pre></div>
+<p>Lets say we wan&rsquo;t to use the Person entity directly as an input parameter for a JAX-RS endpoint like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@POST</span>
+<span class="nd">@Consumes</span><span class="o">(</span><span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">Response</span> <span class="nf">createPerson</span><span class="o">(</span><span class="n">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nd">@Context</span> <span class="n">UriInfo</span> <span class="n">info</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Person</span> <span class="n">createdPerson</span> <span class="o">=</span> <span class="n">personService</span><span class="o">.</span><span class="na">createPerson</span><span class="o">(</span><span class="n">person</span><span class="o">);</span>
+    <span class="n">URI</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="na">getAbsolutePathBuilder</span><span class="o">().</span><span class="na">path</span><span class="o">(</span><span class="s">&#34;/&#34;</span> <span class="o">+</span> <span class="n">person</span><span class="o">.</span><span class="na">getId</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">created</span><span class="o">(</span><span class="n">uri</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+<span class="o">}</span></code></pre></div>
+<p>This won&rsquo;t work out of the box as JAX-RS has no way of knowing how to instantiate a java.time.LocalDate instance from the JSON input string (for example &ldquo;2015/21/05&rdquo;).
+Moreover, JAX-RS have no way of knowing what date-format the caller is using and LocalDate doesn&rsquo;t even have a constructor taking a String argument, which is a requirement for JAX-RS json type-conversion.</p>
+
+<p>On Wildfly we get an exception like this:</p>
+
+<pre><code>[33m11:47:03,278 WARN  [org.jboss.resteasy.core.ExceptionHandler] (default task-2) Failed executing POST /person: org.jboss.resteasy.spi.ReaderException: com.fasterxml.jackson.databind.JsonMappingException: Can not instantiate value of type [simple type, class java.time.LocalDate] from String value ('2015-21-05'); no single-String constructor/factory method
+Unfortunately there is no elegant uniform way to overcome this by only using the Java EE API. The various JAX-RS implementations (Jersey, Resteasy, CXF, etc) all provide &quot;tools&quot; for achieving this. Jackson, for example, have a JSR 310 datatype library which solves the problem but this has a drawback.
+</code></pre>
+
+<hr />
+
+<p>To resolve the problem by only leveraging the Java EE api we can use the XmlJavaTypeAdapter from JAXB:</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LocalDateAdapter</span> <span class="kd">extends</span> <span class="n">XmlAdapter</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">LocalDate</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">LocalDate</span> <span class="nf">unmarshal</span><span class="o">(</span><span class="n">String</span> <span class="n">dateInput</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">LocalDate</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">dateInput</span><span class="o">,</span> <span class="n">DateTimeFormatter</span><span class="o">.</span><span class="na">ISO_DATE</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">marshal</span><span class="o">(</span><span class="n">LocalDate</span> <span class="n">localDate</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">DateTimeFormatter</span><span class="o">.</span><span class="na">ISO_DATE</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">localDate</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+<p>Now annotate the field with the adapter:</p>
+
+<pre><code>@XmlJavaTypeAdapter(LocalDateAdapter.class)
+private LocalDate birthDate;
+</code></pre>
+
+<p>Instead of annotating the field we can declare the adapter in a package-info.java file together with our DTO&rsquo;s. This avoids cluttering of the java-code.</p>
+
+<pre><code>@XmlJavaTypeAdapters({
+    @XmlJavaTypeAdapter(type = LocalDate.class,
+                        value = LocalDateAdapter.class)
+})
+package org.example;
+
+import java.time.LocalDate;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapters;
+</code></pre>
+
+<p>This solution should work across all Java EE servers regardless of JAX-RS implementation (jersey, resteasy, etc).</p>
+
+                <br>
+		<p class="back-to-posts"><a href="https://jorgenringen.github.io/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jrgnr" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111173729-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

@@ -13,10 +13,10 @@
     
     <item>
       <title>JavaEE: Timestamps on entities with entitylistener</title>
-      <link>https://jorgenringen.github.io/blog/javaee-timestamps-on-entities-with-entitylistener/</link>
+      <link>https://jorgenringen.github.io/2015/07/javaee_timestamps_entities_entitylistener/</link>
       <pubDate>Wed, 01 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://jorgenringen.github.io/blog/javaee-timestamps-on-entities-with-entitylistener/</guid>
+      <guid>https://jorgenringen.github.io/2015/07/javaee_timestamps_entities_entitylistener/</guid>
       <description>This post shows how you can add timestamps to your entities in a non-intrusive unified way with plain JPA.
 We start off with an embeddable JPA entity, TimeStamp:
 import javax.persistence.Column; import javax.persistence.Embeddable; import java.util.Date; @Embeddable public class TimeStamp { @Column(name = &amp;#34;date_created&amp;#34;) @Temporal(TemporalType.TIMESTAMP) private Date created; @Column(name = &amp;#34;date_updated&amp;#34;) @Temporal(TemporalType.TIMESTAMP) private Date updated; // getters, setters, etc } We also need a simple interface that our entities should implement:
@@ -25,21 +25,21 @@ public interface EntityWithTimeStamp { void setTimeStamp(TimeStamp timeStamp); T
     
     <item>
       <title>Java8: Stream and Lambda code kata</title>
-      <link>https://jorgenringen.github.io/blog/java8-stream-and-lambda-code-kata/</link>
+      <link>https://jorgenringen.github.io/2015/06/java8_stream_lambda_code_kata/</link>
       <pubDate>Thu, 04 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://jorgenringen.github.io/blog/java8-stream-and-lambda-code-kata/</guid>
+      <guid>https://jorgenringen.github.io/2015/06/java8_stream_lambda_code_kata/</guid>
       <description>I just added a code kata for learning the Stream and Lambda API&amp;rsquo;s in Java 8.
 The purpose of a kata is to repeat a simple exercise over and over again, making small improvements for each iteration, until you basically can do the exercise blind folded. I find this to be one of the most effective ways to improve basic coding skills and to learn new things.
 Feel free to fork and submit your own &amp;ldquo;perfectionized&amp;rdquo; solution.</description>
     </item>
     
     <item>
-      <title>JavaEE: Using JSR310 types in your DTO&#39;s with JAX-RS</title>
-      <link>https://jorgenringen.github.io/blog/javaee-using-jsr310-types-in-your-dtos-with-jax-rs/</link>
+      <title>JavaEE: Using JSR310 time-types in JAX-RS</title>
+      <link>https://jorgenringen.github.io/2015/05/javaee_jsr310_types_with_jaxrs/</link>
       <pubDate>Thu, 21 May 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://jorgenringen.github.io/blog/javaee-using-jsr310-types-in-your-dtos-with-jax-rs/</guid>
+      <guid>https://jorgenringen.github.io/2015/05/javaee_jsr310_types_with_jaxrs/</guid>
       <description>With Java 8 came JSR310, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
 JavaEE dependency:
 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;javaee-api&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;7.0&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; Create a simple Person-class with a field, birthDate, of type java.time.LocalDate from JSR310:
