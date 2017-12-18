@@ -61,9 +61,9 @@ A typical build pipeline might look something like this:
 
 
     
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2021%3a24%3a49.550542%20%2b0100%20CET%20m%3d%2b0.066659859">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2021%3a24%3a49.550542%20%2b0100%20CET%20m%3d%2b0.066659859">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2021%3a24%3a49.550542%20%2b0100%20CET%20m%3d%2b0.066659859">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2021%3a26%3a45.279702%20%2b0100%20CET%20m%3d%2b0.052696210">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2021%3a26%3a45.279702%20%2b0100%20CET%20m%3d%2b0.052696210">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2021%3a26%3a45.279702%20%2b0100%20CET%20m%3d%2b0.052696210">
     
 
 
@@ -199,7 +199,7 @@ build application binaries only <em>once</em> and let the exact same binary flow
 <li>Production</li>
 </ol>
 
-<p>Many of these steps will often require different application configuration. We might for instance want to stub out some backend services, use different username/password for each environment, etc.</p>
+<p>Many of these steps will often require different application configuration. We might want to stub out some backend services, use different username/password for each environment, etc.</p>
 
 <p>Unfortunately there’s a convention in the Java EE spec to
 package the configuration inside the war or ear file together with the application.
@@ -313,7 +313,7 @@ that has a nice API and is quite easy to work with.</p>
 
 <p>There are also many alternatives to ZooKeeper, like <a href="https://spring.io/guides/gs/centralized-configuration/">Spring Config Server</a>, <a href="https://www.consul.io/">Consul</a> and <a href="https://github.com/coreos/etcd">etcd</a>.</p>
 
-<p>You can also use jvm parameters or store configuration in a database, but the most important point is to remove the build-time dependency.</p>
+<p>You can also just use simple jvm-arguments or store configuration in a database, but the most important point is to remove the build-time dependency.</p>
 
                 <br>
 		<p class="back-to-posts"><a href="https://jorgenringen.github.io/blog/">Back to posts</a></p>
