@@ -44,11 +44,11 @@ Feel free to fork and submit your own &amp;ldquo;perfectionized&amp;rdquo; solut
     </item>
     
     <item>
-      <title>JavaEE: Using JSR 310 in your DTO&#39;s with JAX-RS</title>
-      <link>https://jorgenringen.github.io/blog/javaee-using-jsr-310-in-your-dtos-with-jax-rs/</link>
+      <title>JavaEE: Using JSR310 types in your DTO&#39;s with JAX-RS</title>
+      <link>https://jorgenringen.github.io/blog/javaee-using-jsr310-types-in-your-dtos-with-jax-rs/</link>
       <pubDate>Thu, 21 May 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://jorgenringen.github.io/blog/javaee-using-jsr-310-in-your-dtos-with-jax-rs/</guid>
+      <guid>https://jorgenringen.github.io/blog/javaee-using-jsr310-types-in-your-dtos-with-jax-rs/</guid>
       <description>With Java 8 came JSR310, a new and improved date and time API for Java. This post will show you how you can use types from JSR310 directly in JAX-RS s by only leveraging the Java EE api.
 JavaEE dependency:
 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;javaee-api&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;7.0&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; Create a simple Person-class with a field, birthDate, of type java.time.LocalDate from JSR310:
