@@ -10,13 +10,13 @@
 <meta name="referrer" content="no-referrer">
 <meta name="author" content="Jørgen Ringen">
 <meta name="description" content="An important principle in continuous delivery is to build application binaries only once and let the exact same binary flow through each step of the build pipeline in order to verify that the binary is ready for production.
-A typical build pipeline might look something like this: 1. Commit stage (build, unit test, analysis) 2. Automated acceptance tests 3. Capacity testing 4. User acceptance testing 5. Production
-Many of these steps will often require different application configuration.">
+A typical build pipeline might look something like this:
+ Commit stage (build, unit test, analysis) Automated acceptance tests Capacity testing User acceptance testing Production  Many of these steps will often require different application configuration.">
 
 <meta property="og:title" content="JavaEE: Externalising configuration with ZooKeeper" />
 <meta property="og:description" content="An important principle in continuous delivery is to build application binaries only once and let the exact same binary flow through each step of the build pipeline in order to verify that the binary is ready for production.
-A typical build pipeline might look something like this: 1. Commit stage (build, unit test, analysis) 2. Automated acceptance tests 3. Capacity testing 4. User acceptance testing 5. Production
-Many of these steps will often require different application configuration." />
+A typical build pipeline might look something like this:
+ Commit stage (build, unit test, analysis) Automated acceptance tests Capacity testing User acceptance testing Production  Many of these steps will often require different application configuration." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://jorgenringen.github.io/2015/10/javaee_configuration_zookeeper/" />
 
@@ -61,9 +61,9 @@ Many of these steps will often require different application configuration." />
 
 
     
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2021%3a24%3a20.652585%20%2b0100%20CET%20m%3d%2b0.059626881">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2021%3a24%3a20.652585%20%2b0100%20CET%20m%3d%2b0.059626881">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2021%3a24%3a20.652585%20%2b0100%20CET%20m%3d%2b0.059626881">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2021%3a24%3a49.550542%20%2b0100%20CET%20m%3d%2b0.066659859">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2021%3a24%3a49.550542%20%2b0100%20CET%20m%3d%2b0.066659859">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2021%3a24%3a49.550542%20%2b0100%20CET%20m%3d%2b0.066659859">
     
 
 
@@ -189,12 +189,15 @@ Many of these steps will often require different application configuration." />
 <p>An important principle in <a href="https://continuousdelivery.com/">continuous delivery</a> is to
 build application binaries only <em>once</em> and let the exact same binary flow through each step of the <a href="https://devops.com/continuous-delivery-pipeline/">build pipeline</a> in order to verify that the binary is ready for production.</p>
 
-<p>A typical build pipeline might look something like this:
-1. Commit stage (build, unit test, analysis)
-2. Automated acceptance tests
-3. Capacity testing
-4. User acceptance testing
-5. Production</p>
+<p>A typical build pipeline might look something like this:</p>
+
+<ol>
+<li>Commit stage (build, unit test, analysis)</li>
+<li>Automated acceptance tests</li>
+<li>Capacity testing</li>
+<li>User acceptance testing</li>
+<li>Production</li>
+</ol>
 
 <p>Many of these steps will often require different application configuration. We might for instance want to stub out some backend services, use different username/password for each environment, etc.</p>
 

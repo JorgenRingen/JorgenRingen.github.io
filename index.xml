@@ -27,8 +27,8 @@
       
       <guid>https://jorgenringen.github.io/2015/10/javaee_configuration_zookeeper/</guid>
       <description>An important principle in continuous delivery is to build application binaries only once and let the exact same binary flow through each step of the build pipeline in order to verify that the binary is ready for production.
-A typical build pipeline might look something like this: 1. Commit stage (build, unit test, analysis) 2. Automated acceptance tests 3. Capacity testing 4. User acceptance testing 5. Production
-Many of these steps will often require different application configuration.</description>
+A typical build pipeline might look something like this:
+ Commit stage (build, unit test, analysis) Automated acceptance tests Capacity testing User acceptance testing Production  Many of these steps will often require different application configuration.</description>
     </item>
     
     <item>
