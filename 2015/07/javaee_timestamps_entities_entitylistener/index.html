@@ -8,7 +8,7 @@
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer">
-<meta name="author" content="Jorgen Ringen">
+<meta name="author" content="Jørgen Ringen">
 <meta name="description" content="This post shows how you can add timestamps to your entities in a non-intrusive unified way with plain JPA.
 We start off with an embeddable JPA entity, TimeStamp:
 import javax.persistence.Column; import javax.persistence.Embeddable; import java.util.Date; @Embeddable public class TimeStamp { @Column(name = &#34;date_created&#34;) @Temporal(TemporalType.TIMESTAMP) private Date created; @Column(name = &#34;date_updated&#34;) @Temporal(TemporalType.TIMESTAMP) private Date updated; // getters, setters, etc } We also need a simple interface that our entities should implement:
@@ -63,9 +63,9 @@ public interface EntityWithTimeStamp { void setTimeStamp(TimeStamp timeStamp); T
 
 
     
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2020%3a09%3a01.983942%20%2b0100%20CET%20m%3d%2b0.056291626">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2020%3a09%3a01.983942%20%2b0100%20CET%20m%3d%2b0.056291626">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2020%3a09%3a01.983942%20%2b0100%20CET%20m%3d%2b0.056291626">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-18%2020%3a46%3a01.303815%20%2b0100%20CET%20m%3d%2b0.063469048">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-18%2020%3a46%3a01.303815%20%2b0100%20CET%20m%3d%2b0.063469048">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-18%2020%3a46%3a01.303815%20%2b0100%20CET%20m%3d%2b0.063469048">
     
 
 
@@ -103,7 +103,7 @@ public interface EntityWithTimeStamp { void setTimeStamp(TimeStamp timeStamp); T
                 
                 <a href="https://jorgenringen.github.io/"><img class="avatar" src="https://jorgenringen.github.io/img/profile.png" srcset="https://jorgenringen.github.io/img/profile.png 1x"></a>
             
-            <a href="https://jorgenringen.github.io/"><div class="name">Jorgen Ringen</div></a>
+            <a href="https://jorgenringen.github.io/"><div class="name">Jørgen Ringen</div></a>
             
               <h3 class="self-intro">Nothin but code 👨‍💻</h3>
             
