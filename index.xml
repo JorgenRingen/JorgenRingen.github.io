@@ -31,6 +31,17 @@ Problem One of the problems with jacoco and maven is that coverage is only repor
     </item>
     
     <item>
+      <title>Logging: Simple way to trace related log statements in an application</title>
+      <link>https://jorgenringen.github.io/2016/08/logging_rename_thread_name/</link>
+      <pubDate>Mon, 01 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://jorgenringen.github.io/2016/08/logging_rename_thread_name/</guid>
+      <description>Ever seen this kind of output in your logs?
+[0m18:33:51,083 INFO [org.example.business.PersonResource] (default task-2) Validation error. Returning status-code 400  What&amp;rsquo;s the problem with this log-message? We know that some validation has failed and that a status-code 400 was returned. Other than that it doesn&amp;rsquo;t provide a lot more information other than the time of the event and the name of the class that logged the message.
+How can we find any related log-statements to the error?</description>
+    </item>
+    
+    <item>
       <title>JavaEE: Externalising configuration with ZooKeeper</title>
       <link>https://jorgenringen.github.io/2015/10/javaee_configuration_zookeeper/</link>
       <pubDate>Thu, 01 Oct 2015 00:00:00 +0000</pubDate>
