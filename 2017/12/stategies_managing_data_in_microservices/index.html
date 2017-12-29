@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Jørgen Ringen">
+<meta name="description" content="Strategies for managing data in microservices In this post, we’ll look at some common patterns for managing data in a distributed microservice architecture. Managing data in a monolithic application is fairly easy and well understood, but in a microservice architecture it can be a lot more challenging and different patterns are needed. By just re-using patterns from the monolithic world we often end up with poor results and this anti-pattern is often known as the “distributed monolith”.">
+
+<meta property="og:title" content="Strategies for managing data in microservices" />
+<meta property="og:description" content="Strategies for managing data in microservices In this post, we’ll look at some common patterns for managing data in a distributed microservice architecture. Managing data in a monolithic application is fairly easy and well understood, but in a microservice architecture it can be a lot more challenging and different patterns are needed. By just re-using patterns from the monolithic world we often end up with poor results and this anti-pattern is often known as the “distributed monolith”." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jorgenringen.github.io/2017/12/stategies_managing_data_in_microservices/" />
+
+
+
+<meta property="article:published_time" content="2017-12-29T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-12-29T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Strategies for managing data in microservices 
+
+</title>
+<link rel="canonical" href="https://jorgenringen.github.io/2017/12/stategies_managing_data_in_microservices/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2017-12-29%2014%3a07%3a00.23310451%20%2b0100%20CET%20m%3d%2b0.039725855">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2017-12-29%2014%3a07%3a00.23310451%20%2b0100%20CET%20m%3d%2b0.039725855">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2017-12-29%2014%3a07%3a00.23310451%20%2b0100%20CET%20m%3d%2b0.039725855">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://jorgenringen.github.io/img/leaf.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="https://jorgenringen.github.io/"><img class="avatar" src="https://jorgenringen.github.io/img/profile.png" srcset="https://jorgenringen.github.io/img/profile.png 1x"></a>
+            
+            <a href="https://jorgenringen.github.io/"><div class="name">Jørgen Ringen</div></a>
+            
+              <h3 class="self-intro">Nothin but code 👨‍💻</h3>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://jorgenringen.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://jorgenringen.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://github.com/JorgenRingen"><span>Code</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/JorgenRingen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/JorgenRingen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+
+        
+            <a href="//linkedin.com/in/jorgenringen" target="_blank" rel="noopener"><img class="icon" src="https://jorgenringen.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            
+        
+
+        
+
+        
+            <a href="mailto:jorgen.ringen@gmail.com"><img class="icon" src="https://jorgenringen.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+            <a href="https://jorgenringen.github.io/index.xml"><img class="icon" src="https://jorgenringen.github.io/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Strategies for managing data in microservices
+
+</div>
+
+                    <div class="initials"><a href="https://jorgenringen.github.io/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Fri Dec 29 2017 00:00:00 UTC'>Dec 29, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>4 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<h1 id="strategies-for-managing-data-in-microservices">Strategies for managing data in microservices</h1>
+
+<p>In this post, we’ll look at some common patterns for managing data in a distributed microservice architecture. Managing data in a monolithic application is fairly easy and well understood, but in a microservice architecture it can be a lot more challenging and different patterns are needed. By just re-using patterns from the monolithic world we often end up with poor results and this anti-pattern is often known as the <a href="https://www.microservices.com/talks/dont-build-a-distributed-monolith/">“distributed monolith”</a>.</p>
+
+<hr />
+
+<h3 id="private-data-stores-and-synchronous-calls-between-service-interfaces">Private data-stores and synchronous calls between service interfaces</h3>
+
+<p>Each microservice manages their own data in private data-stores. Every piece of data is owned by a single service. When a service needs to exchange data with other services it calls their public api by using REST, gRPC, etc. Designing stable, reusable and encapsulated API’s are crucial.</p>
+
+<p><img src="https://jorgenringen.github.io/img/synchronous_communication.png" alt="Synchronous communication" /></p>
+
+<p><strong>Pros</strong></p>
+
+<ul>
+<li>Easy to implement</li>
+<li>Very well understood pattern and programming paradigm</li>
+<li>Fairly easy to follow the program flow between the services assuming good <a href="http://microservices.io/patterns/observability/distributed-tracing.html">logging and tracing facilities</a> are in place</li>
+<li>Easy to reason about <a href="https://en.wikipedia.org/wiki/Eventual_consistency">eventual consistency</a> in a synchronous architecture</li>
+</ul>
+
+<p><strong>Cons</strong></p>
+
+<ul>
+<li>Availability can be significantly decreased if one or more services stops responding. This can have a ripple-effect throughout the architecture if there are many runtime-dependencies. This can be mitigated to some extent by using <a href="https://en.wikipedia.org/wiki/Circuit_breaker">circuit breaker</a> and similar patterns.</li>
+<li>Transactions spanning across multiple services are hard to implement. Distributed transactions should be avoided because of <a href="https://en.wikipedia.org/wiki/CAP_theorem">the CAP theorem</a>. Can be mitigated by using the <a href="http://microservices.io/patterns/data/saga.html">saga pattern</a>, workflows or <a href="https://en.wikipedia.org/wiki/Compensating_transaction">compensating transactions</a> for example.</li>
+<li>Implementing queries that “joins” across multiple services are challenging. Can result in poor performance as you typically need to ask one service before you can call another.</li>
+<li>Poor scalability and performance because of synchronous calls. Can to some extent be mitigated by using caching.</li>
+</ul>
+
+<hr />
+
+<h3 id="private-data-stores-and-asynchronous-events">Private data-stores and asynchronous events</h3>
+
+<p>Each microservice manages their own data in private data-stores. Every piece of data is <em>owned</em> by a single service, but data can be replicated across services as reference-data.  Each microservice stores the necessary reference-data it needs in an optimized data structure. Services can publish business events when state changes by the use of <a href="https://en.wikipedia.org/wiki/Message-oriented_middleware">message-oriented middleware</a> (ActiveMQ, RabbitMQ, Kafka, etc) so that the other services can update their reference-data accordingly in an asynchronously manner. The events will typically include an event-type plus data describing what has happened. This pattern is often referred to as <a href="https://en.wikipedia.org/wiki/Event-driven_architecture">event-driven architecture</a>.</p>
+
+<p><img src="https://jorgenringen.github.io/img/eda_communication.png" alt="Eventdriven architecture" /></p>
+
+<p><strong>Pros</strong></p>
+
+<ul>
+<li>Great scalability and performance</li>
+<li>Availability - each microservice operates on its own data and are not runtime-dependent on others.</li>
+<li>“Quality of service” guarantees are provided by message-oriented middleware (guaranteed delivery, FIFO, etc)</li>
+<li>Easy to add new microservices that can start subscribing to events</li>
+</ul>
+
+<p><strong>Cons</strong></p>
+
+<ul>
+<li>Can be more complex to implement</li>
+<li>Asynchronous communication can be more challenging than synchronous communication</li>
+<li>Need for a middleware component for messaging</li>
+<li>Harder to reason about eventual consistency as updates happens asynchronously</li>
+<li>Single point of failure in the message-oriented middleware</li>
+</ul>
+
+<hr />
+
+<h3 id="event-sourcing-and-streaming">Event-sourcing and Streaming</h3>
+
+<p>This pattern is somewhat similar to “private data-store, async events”, but it reduces the need for storing data locally in the services. Services publishes business events to an event-store. Services can subscribe to, and process, events or they can do queries directly towards the <a href="https://martinfowler.com/eaaDev/EventSourcing.html">event store</a>. This pattern is often used in conjunction with <a href="http://microservices.io/patterns/data/cqrs.html">CQRS</a>. There are some very interesting technologies emerging in this field, like <a href="https://www.confluent.io/blog/ksql-open-source-streaming-sql-for-apache-kafka/">KSQL</a> which is a query language for <a href="https://kafka.apache.org">Kafka</a>.</p>
+
+<p><img src="https://jorgenringen.github.io/img/event_sourcing.png" alt="Event-sourcing" /></p>
+
+<p><strong>Pros</strong></p>
+
+<ul>
+<li>Highly scalable and performant</li>
+<li>Event-store provides strong audit capabilities</li>
+<li>Potential for high recoverability as events can be re-processed</li>
+<li>Easy to add new microservices that can read from and publish to the event-store</li>
+<li>Flexible pattern that can spur new ideas, creativity and opportunities.</li>
+</ul>
+
+<p><strong>Cons</strong></p>
+
+<ul>
+<li>Arguably somewhat immature technologies, but gaining a lot of traction</li>
+<li>Can be more complex to implement</li>
+</ul>
+
+<hr />
+
+<h3 id="shared-metadata-libraries">Shared metadata-libraries</h3>
+
+<p>This is an old but useful pattern, even in a distributed microservice world. Read-only and immutable metadata is stored in libraries and used by the different microservices. Examples: Countries, states, colours, etc.</p>
+
+<p><img src="https://jorgenringen.github.io/img/metadata_libraries.png" alt="Metadata libraries" /></p>
+
+<p><strong>Pros</strong></p>
+
+<ul>
+<li>Very well-understood and easy to implement</li>
+<li>Productivity gain</li>
+<li>Shared model across services</li>
+</ul>
+
+<p><strong>Cons</strong></p>
+
+<ul>
+<li>Change in data often requires each services to be re-built.</li>
+</ul>
+
+<hr />
+
+<h3 id="closing-words">Closing words…</h3>
+
+<p>As always there’s no <a href="https://acntech.no/the-silver-bullet-obsession-in-software-development/">silver bullet</a> when it comes to managing data in microservices and software architecture is an evolutionary process as well. It’s important to choose the right tools for the job and different use-cases requires different patterns. Some data needs some degree of synchronous communication and some data fits more closely with asynchronous communication. It’s highly likely that you’ll find data in both categories, and data that’s somewhere  in between, in every software system. Each of the patterns can easily be used in conjunction with each other.</p>
+
+<p>One thing that’s certain is that you have to have a bigger toolbox in the microservice-world and things like events and asynchronous communication should definitely be first-class citizens in that toolbox.</p>
+
+<p>This post was inspired by a great talk by <a href="https://twitter.com/randyshoup">Randy Shoup</a> at QCon New York 2017: <a href="https://www.infoq.com/presentations/microservices-data-centric">Managing data in microservices</a></p>
+
+                <br>
+		<p class="back-to-posts"><a href="https://jorgenringen.github.io/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jorgenringen" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111173729-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+
