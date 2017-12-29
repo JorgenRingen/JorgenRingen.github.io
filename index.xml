@@ -6,10 +6,19 @@
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 Dec 2017 19:04:34 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 29 Dec 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://jorgenringen.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Strategies for managing data in microservices</title>
+      <link>https://jorgenringen.github.io/2017/12/microservices_manage_data_strategies/</link>
+      <pubDate>Fri, 29 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://jorgenringen.github.io/2017/12/microservices_manage_data_strategies/</guid>
+      <description>Strategies for managing data in microservices In this post, we’ll look at some common patterns for managing data in a distributed microservice architecture. Managing data in a monolithic application is fairly easy and well understood, but in a microservice architecture it can be a lot more challenging and different patterns are needed. By just re-using patterns from the monolithic world we often end up with poor results and this anti-pattern is often known as the “distributed monolith”.</description>
+    </item>
     
     <item>
       <title>About</title>
