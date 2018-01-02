@@ -6,10 +6,19 @@
     <description>Recent content in Blog on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Dec 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://jorgenringen.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Design patterns: Factory method naming conventions</title>
+      <link>https://jorgenringen.github.io/2018/01/factory_method_naming_conventions/</link>
+      <pubDate>Tue, 02 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://jorgenringen.github.io/2018/01/factory_method_naming_conventions/</guid>
+      <description>Factory method pattern naming conventions The “factory method” is a very useful pattern, but it has som limitations when it comes to documentation. Constructors “stand out” in API documentation and are easy to spot, but factory methods on the other hand can be hard to find. There are some naming conventions laid out in effective java that can reduce this problem and make the factory methods easier to find in an IDE.</description>
+    </item>
     
     <item>
       <title>Strategies for managing data in microservices</title>

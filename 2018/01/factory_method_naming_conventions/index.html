@@ -9,22 +9,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer">
 <meta name="author" content="Jørgen Ringen">
-<meta name="description" content="I just added a code kata for learning the Stream and Lambda API&rsquo;s in Java 8.
-The purpose of a kata is to repeat a simple exercise over and over again, making small improvements for each iteration, until you basically can do the exercise blind folded. I find this to be one of the most effective ways to improve basic coding skills and to learn new things.
-Feel free to fork and submit your own &ldquo;perfectionized&rdquo; solution.">
+<meta name="description" content="Factory method pattern naming conventions The “factory method” is a very useful pattern, but it has som limitations when it comes to documentation. Constructors “stand out” in API documentation and are easy to spot, but factory methods on the other hand can be hard to find. There are some naming conventions laid out in effective java that can reduce this problem and make the factory methods easier to find in an IDE.">
 
-<meta property="og:title" content="Java8: Stream and Lambda code kata" />
-<meta property="og:description" content="I just added a code kata for learning the Stream and Lambda API&rsquo;s in Java 8.
-The purpose of a kata is to repeat a simple exercise over and over again, making small improvements for each iteration, until you basically can do the exercise blind folded. I find this to be one of the most effective ways to improve basic coding skills and to learn new things.
-Feel free to fork and submit your own &ldquo;perfectionized&rdquo; solution." />
+<meta property="og:title" content="Design patterns: Factory method naming conventions" />
+<meta property="og:description" content="Factory method pattern naming conventions The “factory method” is a very useful pattern, but it has som limitations when it comes to documentation. Constructors “stand out” in API documentation and are easy to spot, but factory methods on the other hand can be hard to find. There are some naming conventions laid out in effective java that can reduce this problem and make the factory methods easier to find in an IDE." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://jorgenringen.github.io/2015/06/java8_stream_lambda_code_kata/" />
+<meta property="og:url" content="https://jorgenringen.github.io/2018/01/factory_method_naming_conventions/" />
 
 
 
-<meta property="article:published_time" content="2015-06-04T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-01-02T00:00:00&#43;00:00"/>
 
-<meta property="article:modified_time" content="2015-06-04T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-01-02T00:00:00&#43;00:00"/>
 
 
 
@@ -40,10 +36,10 @@ Feel free to fork and submit your own &ldquo;perfectionized&rdquo; solution." />
 <title>
 
 
-     Java8: Stream and Lambda code kata 
+     Design patterns: Factory method naming conventions 
 
 </title>
-<link rel="canonical" href="https://jorgenringen.github.io/2015/06/java8_stream_lambda_code_kata/">
+<link rel="canonical" href="https://jorgenringen.github.io/2018/01/factory_method_naming_conventions/">
 
 
 
@@ -61,9 +57,9 @@ Feel free to fork and submit your own &ldquo;perfectionized&rdquo; solution." />
 
 
     
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2018-01-02%2014%3a43%3a25.771169863%20%2b0100%20CET%20m%3d%2b0.060469694">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2018-01-02%2014%3a43%3a25.771169863%20%2b0100%20CET%20m%3d%2b0.060469694">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2018-01-02%2014%3a43%3a25.771169863%20%2b0100%20CET%20m%3d%2b0.060469694">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2018-01-02%2014%3a43%3a25.769180326%20%2b0100%20CET%20m%3d%2b0.058480157">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2018-01-02%2014%3a43%3a25.769180326%20%2b0100%20CET%20m%3d%2b0.058480157">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2018-01-02%2014%3a43%3a25.769180326%20%2b0100%20CET%20m%3d%2b0.058480157">
     
 
 
@@ -176,7 +172,7 @@ Feel free to fork and submit your own &ldquo;perfectionized&rdquo; solution." />
                 <div class="title-container">
                     <div class="page-heading">
 
-    Java8: Stream and Lambda code kata
+    Design patterns: Factory method naming conventions
 
 </div>
 
@@ -184,22 +180,65 @@ Feel free to fork and submit your own &ldquo;perfectionized&rdquo; solution." />
                 </div>
                 <div class="meta">
                     
-                    <div class="date" title='Thu Jun 4 2015 00:00:00 UTC'>Jun 4, 2015</div>
+                    <div class="date" title='Tue Jan 2 2018 00:00:00 UTC'>Jan 2, 2018</div>
                     
                     
-		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+		    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
                     
                 </div>
             </div>
             <div class="markdown">
-                <p>I just added a <a href="https://github.com/JorgenRingen/stream-lambda-kata">code kata</a> for learning the Stream and Lambda API&rsquo;s in Java 8.</p>
+                <p>Factory method pattern naming conventions
+The <a href="https://en.wikipedia.org/wiki/Factory_method_pattern">“factory method”</a> is a very useful pattern, but it has som limitations when it comes to documentation.  Constructors “stand out” in API documentation and are easy to spot, but factory methods on the other hand can be hard to find. There are some naming conventions laid out in <a href="https://www.amazon.com/Effective-Java-3rd-Joshua-Bloch/dp/0134685997">effective java</a> that can reduce this problem and make the factory methods easier to find in an IDE.</p>
 
-<p>The purpose of a kata is to repeat a simple exercise over and over again, making small improvements for each iteration, until you basically can do the exercise blind folded.
-I find this to be one of the most effective ways to improve basic coding skills and to learn new things.</p>
+<hr />
 
-<p>Feel free to fork and submit your own &ldquo;perfectionized&rdquo; solution.</p>
+<p><strong><code>from</code></strong></p>
 
-<p>Link: <a href="https://github.com/JorgenRingen/stream-lambda-kata">https://github.com/JorgenRingen/stream-lambda-kata</a></p>
+<p><em>Type-conversion</em>. Takes a single parameter and returns an instance of the same type as the parameter.
+<code>Date d2 = Date.from(d1);</code></p>
+
+<hr />
+
+<p><strong><code>of</code></strong></p>
+
+<p>An aggregation method that takes multiple parameters and returns an instance that “incorporate” the parameters. Return type is same as parameters.
+<code>Set&lt;Gender&gt; genders = EnumSet.of(MALE, FEMALE);</code></p>
+
+<hr />
+
+<p><strong><code>valueOf</code></strong></p>
+
+<p>More verbose alternative to from and of
+<code>BigInteger.valueOf(Integer.MAX_VALUE);</code></p>
+
+<hr />
+
+<p><strong><code>instance</code></strong> or <strong><code>getInstance</code></strong></p>
+
+<p>Returns an instance that is described by its parameters (if any). Doesn’t have to have the same type as parameters. Return value is typically cached (singleton, etc)
+<code>KeyFactory.getInstance(&quot;RSA&quot;);</code></p>
+
+<hr />
+
+<p><strong><code>create</code></strong> or <strong><code>newInstance</code></strong></p>
+
+<p>Like instance or getInstance but returns a new instance on each invocation
+<code>Array.newInstance(classObject, length);</code></p>
+
+<hr />
+
+<p><strong><code>getType</code></strong> or <strong><code>type</code></strong></p>
+
+<p>Like getInstance, but used if the factory method in in a different class than the type.
+<code>Collections.list();</code></p>
+
+<hr />
+
+<p><strong><code>fooType</code></strong></p>
+
+<p>A more descriptive version than type, where foo adds meaning to the return type
+<code>Collections.singletonList(T value);</code></p>
 
                 <br>
 		<p class="back-to-posts"><a href="https://jorgenringen.github.io/blog/">Back to posts</a></p>
