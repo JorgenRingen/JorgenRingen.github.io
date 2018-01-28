@@ -9,14 +9,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer">
 <meta name="author" content="Jørgen Ringen">
-<meta name="description" content="Spring Cloud Sleuth is a framework for enhancing logging and diagnostics, especially in a distributed microservice architecture. Sleuth makes it possible to correlate log-statements relating to a specific requests, scheduled jobs, etc within an application or even across multiple application.
+<meta name="description" content="Spring Cloud Sleuth is a framework for enhancing logging and diagnostics, especially in a distributed microservice architecture. Sleuth makes it possible to correlate log-statements relating to a specific requests, scheduled jobs, etc within an application or even across multiple application. This is really useful when using a log-aggregation tool like Splunk or the ELK-stack
 Terminology:
- SLF4J - Standard logging API for java Trace - Can be thought of as a single request in an application or spanning across multiple applications. Spans - Can be thought of as sections/parts of a trace.">
+ SLF4J - Standard logging API for java Trace - Can be thought of as a single request in an application or spanning across multiple applications.">
 
 <meta property="og:title" content="Logging: Distributed tracing with Spring Cloud Sleuth" />
-<meta property="og:description" content="Spring Cloud Sleuth is a framework for enhancing logging and diagnostics, especially in a distributed microservice architecture. Sleuth makes it possible to correlate log-statements relating to a specific requests, scheduled jobs, etc within an application or even across multiple application.
+<meta property="og:description" content="Spring Cloud Sleuth is a framework for enhancing logging and diagnostics, especially in a distributed microservice architecture. Sleuth makes it possible to correlate log-statements relating to a specific requests, scheduled jobs, etc within an application or even across multiple application. This is really useful when using a log-aggregation tool like Splunk or the ELK-stack
 Terminology:
- SLF4J - Standard logging API for java Trace - Can be thought of as a single request in an application or spanning across multiple applications. Spans - Can be thought of as sections/parts of a trace." />
+ SLF4J - Standard logging API for java Trace - Can be thought of as a single request in an application or spanning across multiple applications." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://jorgenringen.github.io/2018/01/tracing_with_spring_cloud_sleuth/" />
 
@@ -61,9 +61,9 @@ Terminology:
 
 
     
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2018-01-28%2017%3a21%3a11.192746%20%2b0100%20CET%20m%3d%2b0.091763051">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2018-01-28%2017%3a21%3a11.192746%20%2b0100%20CET%20m%3d%2b0.091763051">
-    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2018-01-28%2017%3a21%3a11.192746%20%2b0100%20CET%20m%3d%2b0.091763051">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/reset.css?t=2018-01-28%2018%3a36%3a45.793773%20%2b0100%20CET%20m%3d%2b0.112088379">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/pygments.css?t=2018-01-28%2018%3a36%3a45.793773%20%2b0100%20CET%20m%3d%2b0.112088379">
+    <link rel="stylesheet" href="https://jorgenringen.github.io/css/main.css?t=2018-01-28%2018%3a36%3a45.793773%20%2b0100%20CET%20m%3d%2b0.112088379">
     
 
 
@@ -95,6 +95,12 @@ Terminology:
                 
                 
                 
+                
+                    
+                
+                    
+                
+                    
                 
                     
                 
@@ -194,7 +200,8 @@ Terminology:
             <div class="markdown">
                 
 
-<p><a href="https://cloud.spring.io/spring-cloud-sleuth/">Spring Cloud Sleuth</a> is a framework for enhancing logging and diagnostics, especially in a distributed microservice architecture. Sleuth makes it possible to correlate log-statements relating to a specific requests, scheduled jobs, etc within an application or even across multiple application.</p>
+<p><a href="https://cloud.spring.io/spring-cloud-sleuth/">Spring Cloud Sleuth</a> is a framework for enhancing logging and diagnostics, especially in a distributed microservice architecture. Sleuth makes it possible to correlate log-statements relating to a specific requests, scheduled jobs, etc within an application or even across multiple application.
+This is really useful when using a log-aggregation tool like <a href="https://www.splunk.com/">Splunk</a> or the <a href="https://www.elastic.co/webinars/introduction-elk-stack">ELK-stack</a></p>
 
 <p>Terminology:</p>
 
@@ -273,7 +280,8 @@ Terminology:
 
 <h2 id="tracing-across-multiple-applications">Tracing across multiple applications</h2>
 
-<p>Sleuth also provides tracing across multiple applications. By creating RestTemplate as a bean, sleuth will automatically add an interceptor to the RestTemplate. The interceptor will add tracing headers to outbound requests. Sleuth will automatically pick up the headers in the receiving application(s) and use the trace and span id’s for logging. This means that we get tracing across multiple applications out of the box. Sleuth also works with the new flux web client in Spring 5 and a lot of other libraries.</p>
+<p>Sleuth also provides tracing across multiple applications. By creating RestTemplate as a bean, sleuth will automatically add an interceptor to the RestTemplate. The interceptor will add tracing headers to outbound requests. Sleuth will automatically pick up the headers in the receiving application(s) and use the trace and span id’s for logging. This means that we get tracing across multiple applications out of the box.
+Sleuth also works with a lot of other libraries like for example Hystrix, RxJava, Feigh, flux web client in Spring 5, Zuul, ++.</p>
 <div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Bean</span>
 <span class="kd">public</span> <span class="n">RestTemplate</span> <span class="nf">restTemplate</span><span class="o">()</span> <span class="o">{</span>
 	<span class="c1">// sleuth wil automatically add interceptors
