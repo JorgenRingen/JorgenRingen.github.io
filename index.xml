@@ -6,10 +6,21 @@
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://jorgenringen.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Logging: Distributed tracing with Spring Cloud Sleuth</title>
+      <link>https://jorgenringen.github.io/2018/01/tracing_with_spring_cloud_sleuth/</link>
+      <pubDate>Sun, 28 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://jorgenringen.github.io/2018/01/tracing_with_spring_cloud_sleuth/</guid>
+      <description>Spring Cloud Sleuth is a framework for enhancing logging and diagnostics, especially in a distributed microservice architecture. Sleuth makes it possible to correlate log-statements relating to a specific requests, scheduled jobs, etc within an application or even across multiple application.
+Terminology:
+ SLF4J - Standard logging API for java Trace - Can be thought of as a single request in an application or spanning across multiple applications. Spans - Can be thought of as sections/parts of a trace.</description>
+    </item>
     
     <item>
       <title>Design patterns: Factory method naming conventions</title>

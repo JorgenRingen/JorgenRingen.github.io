@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://jorgenringen.github.io/2018/01/tracing_with_spring_cloud_sleuth/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://jorgenringen.github.io/2018/01/factory_method_naming_conventions/</loc>
     <lastmod>2018-01-02T00:00:00+00:00</lastmod>
   </url>
@@ -49,13 +54,13 @@
   
   <url>
     <loc>https://jorgenringen.github.io/</loc>
-    <lastmod>2018-01-02T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://jorgenringen.github.io/blog/</loc>
-    <lastmod>2018-01-02T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
