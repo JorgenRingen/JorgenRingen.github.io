@@ -6,10 +6,20 @@
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://jorgenringen.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Logging: Distributed tracing with Spring Cloud Sleuth part 2 - Zipkin</title>
+      <link>https://jorgenringen.github.io/2018/01/tracing_with_zipkin/</link>
+      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://jorgenringen.github.io/2018/01/tracing_with_zipkin/</guid>
+      <description>In a recent post I took a look at how to accomplish distributed logging across different microservices by using Spring Cloud Sleuth. In this post I&amp;rsquo;ll look at how to aggregate and visualise tracing information by using Zipkin . Zipkin is a distributed tracing system. It helps gather data needed to troubleshoot latency problems in microservice architectures. It manages both the collection and lookup of this data
+Zipkin Server We’ll set up at Zipkin server by using Spring Boot.</description>
+    </item>
     
     <item>
       <title>Logging: Distributed tracing with Spring Cloud Sleuth</title>
